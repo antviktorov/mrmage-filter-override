@@ -10,7 +10,7 @@
 		<mrmage_filteroverride translate="label" module="mrmage_filteroverride">
 			<tab>mrmage</tab>
 			<label>Filter Override</label>
-			<sort_oder>10</sort_oder>
+			<sort_oder>20</sort_oder>
 			<show_in_website>1</show_in_website>
 			<show_in_default>1</show_in_default>
 			<show_in_store>1</show_in_store>

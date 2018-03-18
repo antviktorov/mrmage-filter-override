@@ -16,44 +16,34 @@
 				</rewrite>
 			</catalog_resource>
 		</models>
-		<resources>
-			<mrmage_filteroverride_write>
-				<connection>
-					<use>core_write</use>
-				</connection>
-			</mrmage_filteroverride_write>
-			<mrmage_filteroverride_read>
-				<connection>
-					<use>core_read</use>
-				</connection>
-			</mrmage_filteroverride_read>
-		</resources>
 		<helpers>
 			<mrmage_filteroverride>
 				<class>Mrmage_FilterOverride_Helper</class>
 			</mrmage_filteroverride>
 		</helpers>
 	</global>
-	<acl>
-		<resources>
-			<admin>
-				<children>
-					<system>
-						<children>
-							<config>
-								<children>
-									<mrmage_filteroverride translate="title" module="mrmage_filteroverride">
-										<title>Filter Override</title>
-										<sort_order>500</sort_order>
-									</mrmage_filteroverride>
-								</children>
-							</config>
-						</children>
-					</system>
-				</children>
-			</admin>
-		</resources>
-	</acl>
+	<adminhtml>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<mrmage_filteroverride translate="title" module="mrmage_filteroverride">
+											<title>Filter Override</title>
+											<sort_order>500</sort_order>
+										</mrmage_filteroverride>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
 	<default>
 		<mrmage_filteroverride>
 			<general>
