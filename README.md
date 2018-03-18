@@ -1,6 +1,6 @@
 # Mrmage_FilterOverride (for Magento v. 1.9.x)
 
-## Ovveride default Magento filter index process.
+## Override default Magento filter index process.
 
 * Index only "size" attribute for simple products
 * Index should work as is for the rest types of products
