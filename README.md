@@ -23,3 +23,6 @@
 * Logout from admin
 * Login again and go to "System -> Configuration -> MRMAGE -> Filter Override"
 * In general section set "Enable" to "Yes"
+* Go to "System -> Index Management"
+* Select "Product Attributes" index row and press the "Submit" button
+* Check the result on front-end
