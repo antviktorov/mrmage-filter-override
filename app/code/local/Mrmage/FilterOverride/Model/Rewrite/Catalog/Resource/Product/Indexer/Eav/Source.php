@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Override Catalog Product Eav Select and Multiply Select Attributes Indexer resource model
  *
@@ -9,6 +8,16 @@
 class Mrmage_FilterOverride_Model_Rewrite_Catalog_Resource_Product_Indexer_Eav_Source
     extends Mage_Catalog_Model_Resource_Product_Indexer_Eav_Source
 {
+    /**
+     * Filters will use only this attribute to index.
+     */
+    const SIMPLE_ATTRIBUTE_CODE = 'size';
+
+    /**
+     * @var Mage_Eav_Model_Entity_Attribute_Abstract
+     */
+    protected $_simpleAttribute;
+
     /**
      * Prepare data index for indexable select attributes
      *
@@ -67,12 +76,23 @@ class Mrmage_FilterOverride_Model_Rewrite_Catalog_Resource_Product_Indexer_Eav_S
         return $this;
     }
 
+    /**
+     * Advanced index method to avoid index attributes in simples except "size" attribute.
+     *
+     * @param $attrIds - required attributes to index
+     * @param bool $simples - index simples or other product types
+     * @param null $entityIds - product ids to index
+     * @return null|Varien_Db_Select
+     */
     private function _prepareSelectIndexAdvanced($attrIds, $simples = false, $entityIds = null)
     {
-        //color attribute ID
-        $colorAttrID = 92;
+        if (is_null($this->_simpleAttribute)) {
+            $this->_simpleAttribute = Mage::getModel('eav/config')->getAttribute(
+                'catalog_product', self::SIMPLE_ATTRIBUTE_CODE
+            );
+        }
 
-        if ($simples && !in_array($colorAttrID, $attrIds)) {
+        if ($simples && !in_array($this->_simpleAttribute->getId(), $attrIds)) {
             return null;
         }
 
@@ -99,7 +119,7 @@ class Mrmage_FilterOverride_Model_Rewrite_Catalog_Resource_Product_Indexer_Eav_S
         }
 
         if ($simples) {
-            $attrIds = array($colorAttrID);
+            $attrIds = array($this->_simpleAttribute->getId());
         }
 
         /**@var $select Varien_Db_Select */
@@ -129,9 +149,9 @@ class Mrmage_FilterOverride_Model_Rewrite_Catalog_Resource_Product_Indexer_Eav_S
             ->where('pid.attribute_id IN(?)', $attrIds);
 
         if ($simples) {
-            $select->where('type.type_id = ?', 'simple');
+            $select->where('type.type_id = ?', Mage_Catalog_Model_Product_Type::TYPE_SIMPLE);
         } else {
-            $select->where('type.type_id != ?', 'simple');
+            $select->where('type.type_id != ?', Mage_Catalog_Model_Product_Type::TYPE_SIMPLE);
         }
 
         $select->where(Mage::getResourceHelper('catalog')->getIsNullNotNullCondition('pis.value', 'pid.value'));
